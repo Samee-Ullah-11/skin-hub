@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="0.72" cy="0.45" r="0.85">
+      <stop offset="0" stop-color="#6b3348"/><stop offset="1" stop-color="#1e0b14"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffb3c1" stop-opacity="0.55"/><stop offset="1" stop-color="#ffb3c1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/><stop offset="0.35" stop-color="#ffffff" stop-opacity="0.32"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="30"/></filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="1380" cy="520" r="430" fill="url(#glow)"/>
+  
+  <ellipse cx="1400" cy="900" rx="330" ry="40" fill="#000" opacity="0.35" filter="url(#soft)"/>
+  <g fill="#7fae8c">
+    <path d="M1120 900 C1080 700 1150 520 1260 430 C1250 600 1200 760 1120 900Z" opacity="0.85"/>
+    <path d="M1690 900 C1760 720 1720 560 1630 460 C1620 640 1650 780 1690 900Z" opacity="0.8"/>
+    <path d="M1180 900 C1230 760 1320 700 1400 660 C1340 760 1270 840 1180 900Z" opacity="0.6"/>
+  </g>
+  <rect x="1240" y="700" width="320" height="200" rx="40" fill="#f6d9df"/>
+  <rect x="1240" y="700" width="320" height="200" rx="40" fill="url(#glass)"/>
+  <rect x="1225" y="640" width="350" height="90" rx="30" fill="#e7b3c0"/>
+  <rect x="1240" y="652" width="320" height="16" rx="8" fill="#ffffff" opacity="0.35"/>
+  <rect x="1310" y="770" width="180" height="60" rx="12" fill="#ffffff" opacity="0.8"/>
+  <rect x="1330" y="788" width="100" height="10" rx="5" fill="#6b3348"/>
+  <ellipse cx="1560" cy="560" rx="70" ry="28" fill="#ffffff" opacity="0.85"/>
+  <ellipse cx="1560" cy="552" rx="46" ry="14" fill="#f6d9df"/>
+  <circle cx="1150" cy="320" r="80" fill="#ffb3c1" opacity="0.16"/>
+</svg>

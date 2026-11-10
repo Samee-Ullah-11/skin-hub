@@ -1,0 +1,288 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-soft: var(--soft);
+  --color-line: var(--border);
+  --color-edge: var(--edge);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-chip: var(--chip-bg);
+  --color-chip-ink: var(--chip-text);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    --font-body: var(--f-sans), system-ui, sans-serif;
+    --font-heading: var(--f-sans), system-ui, sans-serif;
+  }
+  html[lang="ur"] {
+    --font-body: var(--f-naskh), var(--f-sans), sans-serif;
+    --font-heading: var(--f-nastaliq), var(--f-naskh), serif;
+  }
+  body {
+    background: var(--page);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  html[lang="ur"] body {
+    line-height: 2;
+  }
+  html[lang="ur"] h1,
+  html[lang="ur"] h2,
+  html[lang="ur"] h3 {
+    /* Nastaliq needs the extra height; size utilities would otherwise reset it. */
+    line-height: 2.1 !important;
+    letter-spacing: 0;
+  }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  a {
+    color: inherit;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  .hero-bg {
+    background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+  }
+  /* Scroll reveal: hidden only when scripts run, so content never disappears without JS. */
+  @media (scripting: enabled) {
+    .reveal {
+      opacity: 0;
+      transition: opacity 400ms ease-out, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal[data-from="left"] { transform: translateX(-24px); }
+    .reveal[data-from="right"] { transform: translateX(24px); }
+    .reveal[data-from="up"] { transform: translateY(16px); }
+    .reveal[data-shown] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Hero entrance and ambient motion. */
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -20px) scale(1.08); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+  }
+  .fade-in { animation: fade-in 250ms ease-out both; }
+
+  /* Page navigation: old page fades out fast, new one fades in with a small rise. */
+  @keyframes page-rise {
+    from { translate: 0 8px; }
+  }
+  ::view-transition-old(.page) { animation: fade-in 120ms ease-in both reverse; }
+  ::view-transition-new(.page) { animation: fade-in 220ms ease-out both, page-rise 220ms ease-out both; }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  }
+  /* A card on a curved rail: turned away at the edges of the scroller, flat and full-size in the middle. */
+  @keyframes curve {
+    from { transform: rotateY(calc(45deg * var(--flip))) scale(0.82); opacity: 0.55; }
+    50% { transform: none; opacity: 1; }
+    to { transform: rotateY(calc(-45deg * var(--flip))) scale(0.82); opacity: 0.55; }
+  }
+  .curve { --flip: 1; animation: curve linear both; animation-timeline: view(inline); }
+  [dir="rtl"] .curve { --flip: -1; }
+  .pop-in { animation: pop-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .rise-in { animation: rise-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .delay-1 { animation-delay: 60ms; }
+  .delay-2 { animation-delay: 120ms; }
+  .delay-3 { animation-delay: 180ms; }
+  .delay-4 { animation-delay: 240ms; }
+  @keyframes hero-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+  @keyframes hero-progress {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+  .hero-zoom { animation: hero-zoom 9s ease-out both; }
+  .hero-progress { animation: hero-progress linear both; }
+  .float-y { animation: float-y 6s ease-in-out infinite; }
+  .float-y-slow { animation: float-y 8s ease-in-out infinite 1s; }
+  .drift { animation: drift 14s ease-in-out infinite; }
+  .drift-slow { animation: drift 18s ease-in-out infinite reverse; }
+
+  /* Announcement bar: the fixed navbar sits below it while it is on screen. */
+  :root {
+    --announce-h: 0px;
+  }
+  html:not([data-announcement="hidden"]):has(.announcement) {
+    --announce-h: 2.25rem;
+  }
+  html[data-announcement="hidden"] .announcement {
+    display: none;
+  }
+
+  /* Form inside a dark panel (home newsletter box). */
+  .newsletter-dark label,
+  .newsletter-dark [role="alert"],
+  .newsletter-dark [role="status"],
+  .newsletter-dark label * {
+    color: #ffffff !important;
+  }
+
+  /* Slim scrollbar for small scroll boxes (booking dates and times). */
+  .thin-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+  }
+  .thin-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .thin-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 999px;
+  }
+  .thin-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Scroll wheel (iPhone-style picker): no visible scrollbar, rows fade towards the edges. */
+  .wheel {
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  }
+  .wheel::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Theme switch icon: moon while light, sun while dark (follows the device until someone picks). */
+  .theme-when-light {
+    display: inline-flex;
+  }
+  .theme-when-dark {
+    display: none;
+  }
+  :root[data-theme="dark"] .theme-when-light {
+    display: none;
+  }
+  :root[data-theme="dark"] .theme-when-dark {
+    display: inline-flex;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-when-light {
+      display: none;
+    }
+    :root:not([data-theme="light"]) .theme-when-dark {
+      display: inline-flex;
+    }
+  }
+
+  /* Scrolls if it must, but never shows a scrollbar (login card). */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* A full-screen module: everything in it fits one viewport on desktop; phones just stack the content. */
+  @media (min-width: 1024px) {
+    .screen {
+      min-height: 100svh;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .fade-in, .pop-in, .rise-in, .float-y, .float-y-slow, .drift, .drift-slow { animation: none; }
+  }
+  .lift {
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  .lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lift:hover { transform: none; }
+  }
+  .link {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}

@@ -1,0 +1,153 @@
+/* Design tokens. Light is the default; dark follows the device unless a theme cookie pins it. */
+
+:root {
+  --page: #ffffff;
+  --surface: #ffffff;
+  --soft: #f5f8fb;
+  --border: #dce6ee;
+  --edge: #a9b9c8;
+  --text: #1b2a3a;
+  --muted: #5a6877;
+  --on-primary: #ffffff;
+  --accent: #f2994a;
+  --on-accent: #1b2a3a;
+  --danger: #c53030;
+  --focus: #0e5a8a;
+
+  --status-pending-bg: #fff4d6;
+  --status-pending-fg: #8a5a00;
+  --status-approved-bg: #e1f1e3;
+  --status-approved-fg: #276749;
+  --status-rejected-bg: #fde8e8;
+  --status-rejected-fg: #c53030;
+  --status-blocked-bg: #edf2f7;
+  --status-blocked-fg: #4a5568;
+
+  --slot-taken-bg: #f5f8fb;
+  --slot-taken-fg: #5a6877;
+  --slot-cross: #8795a3;
+
+  --shadow-card: 0 1px 2px rgb(27 42 58 / 0.04);
+  --shadow-soft: 0 1px 2px rgb(27 42 58 / 0.04), 0 8px 24px -8px rgb(27 42 58 / 0.12);
+  --hero-from: #e8f3fa;
+  --hero-to: #f7fbfd;
+}
+
+/* Role colours. The public scope is the default. */
+:root,
+[data-role="public"] {
+  --primary: #0e5a8a;
+  --chip-bg: #e8f3fa;
+  --chip-text: #0e5a8a;
+  --focus: #0e5a8a;
+}
+[data-role="clinic"] {
+  --primary: #26705f;
+  --chip-bg: #e6f4ef;
+  --chip-text: #1f5e50;
+  --focus: #26705f;
+}
+[data-role="admin"] {
+  --primary: #334155;
+  --chip-bg: #eef1f5;
+  --chip-text: #334155;
+  --focus: #334155;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0f1720;
+    --surface: #17212c;
+    --soft: #131c26;
+    --border: #263444;
+    --edge: #3d5068;
+    --text: #e8eef4;
+    --muted: #9aa9b8;
+    --on-primary: #0f1720;
+    --accent: #f2a65a;
+    --on-accent: #0f1720;
+    --danger: #f5a3a3;
+    --status-pending-bg: #3a2e0f;
+    --status-pending-fg: #f2c777;
+    --status-approved-bg: #123d33;
+    --status-approved-fg: #8edcc3;
+    --status-rejected-bg: #3f1d1d;
+    --status-rejected-fg: #f5a3a3;
+    --status-blocked-bg: #242f3d;
+    --status-blocked-fg: #c3cfdd;
+    --slot-taken-bg: #131c26;
+    --slot-taken-fg: #9aa9b8;
+    --slot-cross: #6b7c8e;
+    --shadow-card: none;
+    --shadow-soft: 0 8px 24px -10px rgb(0 0 0 / 0.6);
+    --hero-from: #12304a;
+    --hero-to: #131c26;
+  }
+  :root:not([data-theme="light"]),
+  :root:not([data-theme="light"]) [data-role="public"] {
+    --primary: #5aa9e6;
+    --chip-bg: #12304a;
+    --chip-text: #8cc6f2;
+    --focus: #5aa9e6;
+  }
+  :root:not([data-theme="light"]) [data-role="clinic"] {
+    --primary: #5cc4a4;
+    --chip-bg: #123d33;
+    --chip-text: #8edcc3;
+    --focus: #5cc4a4;
+  }
+  :root:not([data-theme="light"]) [data-role="admin"] {
+    --primary: #a9b8cc;
+    --chip-bg: #242f3d;
+    --chip-text: #c3cfdd;
+    --focus: #a9b8cc;
+  }
+}
+
+:root[data-theme="dark"] {
+  --page: #0f1720;
+  --surface: #17212c;
+  --soft: #131c26;
+  --border: #263444;
+  --edge: #3d5068;
+  --text: #e8eef4;
+  --muted: #9aa9b8;
+  --on-primary: #0f1720;
+  --accent: #f2a65a;
+  --on-accent: #0f1720;
+  --danger: #f5a3a3;
+  --status-pending-bg: #3a2e0f;
+  --status-pending-fg: #f2c777;
+  --status-approved-bg: #123d33;
+  --status-approved-fg: #8edcc3;
+  --status-rejected-bg: #3f1d1d;
+  --status-rejected-fg: #f5a3a3;
+  --status-blocked-bg: #242f3d;
+  --status-blocked-fg: #c3cfdd;
+  --slot-taken-bg: #131c26;
+  --slot-taken-fg: #9aa9b8;
+  --slot-cross: #6b7c8e;
+  --shadow-card: none;
+  --shadow-soft: 0 8px 24px -10px rgb(0 0 0 / 0.6);
+  --hero-from: #12304a;
+  --hero-to: #131c26;
+}
+:root[data-theme="dark"],
+:root[data-theme="dark"] [data-role="public"] {
+  --primary: #5aa9e6;
+  --chip-bg: #12304a;
+  --chip-text: #8cc6f2;
+  --focus: #5aa9e6;
+}
+:root[data-theme="dark"] [data-role="clinic"] {
+  --primary: #5cc4a4;
+  --chip-bg: #123d33;
+  --chip-text: #8edcc3;
+  --focus: #5cc4a4;
+}
+:root[data-theme="dark"] [data-role="admin"] {
+  --primary: #a9b8cc;
+  --chip-bg: #242f3d;
+  --chip-text: #c3cfdd;
+  --focus: #a9b8cc;
+}
