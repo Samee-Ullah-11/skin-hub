@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { localePath } from "@/i18n/config";
 import { getDict } from "@/i18n";
 import { parseForm, runAction, type ActionState } from "@/lib/action";
+import { homeFor } from "@/lib/auth/jwt";
 import { requireUser, startSession } from "@/lib/auth/session";
 import { clientIp } from "@/lib/request";
 import * as authService from "@/services/auth";
@@ -15,12 +16,6 @@ import { changePasswordSchema, clinicSignupSchema, forgotSchema, loginSchema, pr
 function safeNext(next: string | undefined, fallback: string): string {
   if (next && next.startsWith("/") && !next.startsWith("//") && !next.includes("\\")) return next;
   return fallback;
-}
-
-function homeFor(role: string): string {
-  if (role === "admin") return "/admin";
-  if (role === "clinic_owner") return "/dashboard";
-  return "/account/bookings";
 }
 
 /** Hearts a visitor tapped before logging in move into their patient account; the cookie is then cleared. */

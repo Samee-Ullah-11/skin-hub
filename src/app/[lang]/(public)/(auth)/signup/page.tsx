@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { isLang, pick } from "@/i18n/config";
+import { notFound, redirect } from "next/navigation";
+import { homeFor } from "@/lib/auth/jwt";
+import { getSessionUser } from "@/lib/auth/session";
+import { isLang, localePath, pick } from "@/i18n/config";
 import { getDict } from "@/i18n";
 import { listCities } from "@/services/locations";
 import { RoleAuthShell } from "../AuthShell";
@@ -16,6 +18,9 @@ export async function generateMetadata({ params, searchParams }: PageProps<"/[la
 export default async function SignupPage({ params, searchParams }: PageProps<"/[lang]/signup">) {
   const { lang } = await params;
   if (!isLang(lang)) notFound();
+  // One session per browser: someone already signed in must log out before switching accounts.
+  const me = await getSessionUser();
+  if (me) redirect(localePath(lang, homeFor(me.role)));
   const t = getDict(lang).auth;
   const asClinic = (await searchParams).as === "clinic";
 
